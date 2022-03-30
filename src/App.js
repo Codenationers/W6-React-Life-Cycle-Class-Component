@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import Movies from './Movies';
+import AddMovie from './AddMovie';
 import './App.css';
+import { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	const [movies, setMovie] = useState([
+		{ title: 'Die Hard', year: 1988, actor: 'Bruce Willis', id: 1 },
+		{ title: 'Rocky', year: 1976, actor: 'Sylvester Stallone', id: 2 },
+		{ title: 'Titanic', year: 1997, actor: 'Leonardo Dicaprio', id: 3 },
+	]);
+
+	const addMovie = (movie) => {
+		movie.id = Math.random();
+		setMovie([...movies, movie]);
+	};
+
+	const deleteMovie = (id) => {
+		let newMovies = movies.filter((movie) => {
+			return movie.id !== id;
+		});
+		setMovie(newMovies);
+	};
+	return (
+		<div className="App">
+			<h1>React Lifecycle - Functional Component</h1>
+			<Movies movies={movies} deleteMovie={deleteMovie} />
+			<AddMovie addMovie={addMovie} setMovie={setMovie} />
+		</div>
+	);
+};
 
 export default App;
